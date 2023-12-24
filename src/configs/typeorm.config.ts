@@ -1,6 +1,5 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv/config'
 
 export const typeORMConfig : TypeOrmModuleOptions = {
     //Database Type
@@ -11,7 +10,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     password: process.env.DB_USER_PASSWORD,
     database: 'board-app',
     entities: [
-        "src/entity/**/*.ts"
+        "../entity/**/*.ts"
     ],
     synchronize: true,
 }
