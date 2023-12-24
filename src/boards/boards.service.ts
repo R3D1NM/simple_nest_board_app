@@ -1,51 +1,51 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Board, BoardStatus } from './board.model';
+import { BoardStatus } from './board-status.enum';
 import {v1 as uuid} from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsService {
-    private boards: Board[] = [];
 
-    //Get all board list
-    getAllBoards() : Board[] {
-        return this.boards;
-    }
 
-    //Create new Board
-    createBoard(createBoardDto: CreateBoardDto){
-        const {title, description} = createBoardDto
-        const board : Board = {
-            id: uuid(),
-            title,
-            description,
-            status: BoardStatus.PUBLIC
-        }
-        this.boards.push(board);
-        return board;
-    }
+    // //Get all board list
+    // getAllBoards() : Board[] {
+    //     return this.boards;
+    // }
 
-    //get board by id
-    getBoardById(id:string): Board{
-        const found = this.boards.find((board) => board.id === id)
+    // //Create new Board
+    // createBoard(createBoardDto: CreateBoardDto){
+    //     const {title, description} = createBoardDto
+    //     const board : Board = {
+    //         id: uuid(),
+    //         title,
+    //         description,
+    //         status: BoardStatus.PUBLIC
+    //     }
+    //     this.boards.push(board);
+    //     return board;
+    // }
 
-        if(!found){
-            throw new NotFoundException(`Cannot Find Board Id: ${id}`)
-        }
+    // //get board by id
+    // getBoardById(id:string): Board{
+    //     const found = this.boards.find((board) => board.id === id)
 
-        return found;
-    }
+    //     if(!found){
+    //         throw new NotFoundException(`Cannot Find Board Id: ${id}`)
+    //     }
 
-    //delete board by id
-    deleteBoard(id:string): void {
-        const found = this.getBoardById(id)
-        this.boards = this.boards.filter((board)=> board.id !==found.id);
-    }
+    //     return found;
+    // }
 
-    //update status by id
-    updateBoardStatus(id: string, status: BoardStatus) : Board {
-        const board = this.getBoardById(id);
-        board.status = status;
-        return board;
-    }
+    // //delete board by id
+    // deleteBoard(id:string): void {
+    //     const found = this.getBoardById(id)
+    //     this.boards = this.boards.filter((board)=> board.id !==found.id);
+    // }
+
+    // //update status by id
+    // updateBoardStatus(id: string, status: BoardStatus) : Board {
+    //     const board = this.getBoardById(id);
+    //     board.status = status;
+    //     return board;
+    // }
 }
