@@ -14,11 +14,11 @@ export class BoardsController {
     //     return this.boardService.getAllBoards();
     // }
 
-    // @Post() //Create new Board
-    // @UsePipes(ValidationPipe) //validate
-    // createBoard(@Body() createBoardDto: CreateBoardDto) : Board{
-    //     return this.boardService.createBoard(createBoardDto);
-    // }
+    @Post() //Create new Board
+    @UsePipes(ValidationPipe) //validate
+    createBoard(@Body() createBoardDto: CreateBoardDto) : Promise<Board>{
+        return this.boardService.createBoard(createBoardDto);
+    }
 
     @Get('/:id') //Get a board by id
     getBoardById(@Param('id') id :number): Promise<Board> {

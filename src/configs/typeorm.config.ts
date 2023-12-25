@@ -9,8 +9,6 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     username: process.env.DB_USER_ID,
     password: process.env.DB_USER_PASSWORD,
     database: 'board-app',
-    entities: [
-        "../entity/**/*.ts"
-    ],
+    autoLoadEntities: true,
     synchronize: true,
 }
