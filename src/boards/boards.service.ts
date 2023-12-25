@@ -34,16 +34,21 @@ export class BoardsService {
         return found;
     }
 
-    // //delete board by id
-    // deleteBoard(id:string): void {
-    //     const found = this.getBoardById(id)
-    //     this.boards = this.boards.filter((board)=> board.id !==found.id);
-    // }
+    //delete board by id
+    async deleteBoard(id:number): Promise<void> {
+        const result = await this.boardRepository.delete(id)
+        console.log('[delete]',result);
 
-    // //update status by id
-    // updateBoardStatus(id: string, status: BoardStatus) : Board {
-    //     const board = this.getBoardById(id);
-    //     board.status = status;
-    //     return board;
-    // }
+        if(result.affected==0){
+            throw new NotFoundException(`Cannot Find Board Id: ${id}`)
+        }
+    }
+
+    //update status by id
+    async updateBoardStatus(id: number, status: BoardStatus) : Promise<Board> {
+        const board = await this.getBoardById(id);
+        board.status = status;
+        await this.boardRepository.save(board)
+        return board;
+    }
 }

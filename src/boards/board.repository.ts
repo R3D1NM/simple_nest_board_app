@@ -10,6 +10,7 @@ export class BoardRepository extends Repository<Board> {
         super(Board, dataSource.createEntityManager())
     }
 
+    //create new board
     async createBoard(createBoardDto: CreateBoardDto) : Promise <Board>{
         const {title, description} = createBoardDto
         const board = this.create({
@@ -20,4 +21,5 @@ export class BoardRepository extends Repository<Board> {
         await this.save(board)
         return board;
     }
+
 }
