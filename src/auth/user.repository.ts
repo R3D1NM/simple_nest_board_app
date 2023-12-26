@@ -10,6 +10,7 @@ export class UserRepository extends Repository<User> {
         super(User, dataSource.createEntityManager())
     }
 
+    //Create new User
     async createUser(authCredentialDto:AuthCredentialDto) : Promise<void> {
         const {username, password} = authCredentialDto
         const salt = await bcrypt.genSalt()

@@ -14,19 +14,23 @@ export class AuthService {
         private jwtService : JwtService
     ){}
 
+    //Sign up new user
     async signUp(authCredentialDto: AuthCredentialDto): Promise<void> {
         return this.userRepository.createUser(authCredentialDto);
     }
     
-async signIn(authCredentialDto: AuthCredentialDto) : Promise<{accessToken : string}> {
-    const {username, password} = authCredentialDto
-    const user = await this.userRepository.findOneBy({username})
-    if (user && (await bcrypt.compare(password,user.password))) {
-        const payload = {username}
-        const accessToken = await this.jwtService.sign(payload)
-        return {accessToken}
-    } else {
-        throw new UnauthorizedException("Login Failed")
+    //User sign in
+    async signIn(authCredentialDto: AuthCredentialDto) : Promise<{accessToken : string}> {
+        const {username, password} = authCredentialDto
+        const user = await this.userRepository.findOneBy({username})
+
+        //Login Success
+        if (user && (await bcrypt.compare(password,user.password))) {
+            const payload = {username}
+            const accessToken = await this.jwtService.sign(payload)
+            return {accessToken}
+        } else { // Login Failed
+            throw new UnauthorizedException("Login Failed")
+        }
     }
-}
 }
