@@ -9,10 +9,10 @@ import { Board } from 'src/entity/board.entity';
 export class BoardsController {
     constructor(private boardService:BoardsService){}
     
-    // @Get() //Get all board list
-    // getAllBoard() : Board[] {
-    //     return this.boardService.getAllBoards();
-    // }
+    @Get() //Get all board list
+    getAllBoard() : Promise<Board[]> {
+        return this.boardService.getAllBoards();
+    }
 
     @Post() //Create new Board
     @UsePipes(ValidationPipe) //validate
