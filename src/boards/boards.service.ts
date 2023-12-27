@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { BoardStatus } from './board-status.enum';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,8 @@ import { User } from 'src/entity/user.entity';
 
 @Injectable()
 export class BoardsService {
+    private logger = new Logger('BoardsController')
+
     // Inject Repository
     constructor(
         @InjectRepository(BoardRepository)
@@ -42,11 +44,12 @@ export class BoardsService {
     //delete board by id
     async deleteBoard(id:number,user: User): Promise<void> {
         const result = await this.boardRepository.delete({id, user:{id: user.id}})
-        console.log('[delete]',result);
+        //console.log('[delete]',result);
 
         if(result.affected==0){
             throw new NotFoundException(`Cannot Find Board Id: ${id}`)
         }
+        this.logger.log(`User ${user.username} deleted board ${id}`)
     }
 
     //update status by id

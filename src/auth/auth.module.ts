@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config'
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import * as config from 'config'
+
+const JWTConfig = config.get('jwt')
 
 @Module({
   controllers: [AuthController],
@@ -18,7 +21,7 @@ import { PassportModule } from '@nestjs/passport';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions:{
-        expiresIn: 60*60
+        expiresIn: JWTConfig.expiresIn
       }
     })
   ],
